@@ -2,6 +2,6 @@
 - title_localized:
     ru: 'rus title'
     en: 'eng title'
-  author: 1
+  author_id: 1
 - title: 'not localized title'
-  author: 2
+  author_id: 2
