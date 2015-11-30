@@ -1,8 +1,7 @@
 module Jekyll
   module LangFilter
     def lang(input, locale)
-#      site = @context.registers[:site]
-      config = Jekyll.configuration({})
+      config = @context.registers[:site].config
       baseurl = config['baseurl']
       languages = config['languages'] || ['en']
       default_locale = config['default_lang'] || 'en'
