@@ -1,0 +1,21 @@
+---
+layout: page
+---
+    hello
+    <div class="container">
+        <div class="page-header">
+            <h4 class="text-center">{{ page.event_title }}</h4>
+        </div>
+        <div class="clearfix">
+            <p class="pull-left">
+                <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                {{ page.location }}&nbsp;&nbsp;
+            </p>
+            <p class="pull-left">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                10 July 2015, 11:00AM
+            </p>
+        </div>
+        <p>{{ page.full_description }}</p>
+        <img style="display:block;width:400px;margin:20px auto; border-radius:3px;" src="{{ page.image_url }}" alt="">
+    </div>

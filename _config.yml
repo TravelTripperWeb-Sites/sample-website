@@ -2,3 +2,7 @@
 default_lang: 'en'
 languages: ['en', 'ru']
 exclude_from_localization: []
+page_gen:
+  - data: 'events'
+    template: 'event'
+    dir: 'events'
