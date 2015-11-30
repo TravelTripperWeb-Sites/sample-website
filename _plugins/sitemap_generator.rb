@@ -8,6 +8,9 @@ module Jekyll
       languages = site.config['languages']
       default_lang = site.config['default_lang']
 
+      # generate only once
+      return unless default_lang == site.active_lang
+
       sitemap = {}
       languages.each do |lang|
         lang = lang == default_lang ? '' : '/' + lang

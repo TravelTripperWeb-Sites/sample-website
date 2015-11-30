@@ -26,19 +26,25 @@ module Jekyll
       prepare
       pids = {}
       languages.each do |lang|
-        pids[lang] = fork do
+        pids[lang] = Process.fork do
           process_language lang
         end
       end
-      Signal.trap('INT') do
+      old_handler = Signal.trap('INT') do
+        old_handler.call
+
         languages.each do |lang|
-          puts "Killing #{pids[lang]} : #{lang}"
-          kill('INT', pids[lang])
+          begin
+            puts "Killing #{pids[lang]} : #{lang}"
+            Process.kill('INT', pids[lang])
+          rescue Errno::ESRCH
+            puts "Process #{pids[lang]} : #{lang} not running"
+          end
         end
       end
       languages.each do |lang|
-        waitpid pids[lang]
-        detach pids[lang]
+        Process.waitpid pids[lang]
+        Process.detach pids[lang]
       end
     end
 

@@ -3,3 +3,5 @@
 _site/*
 sitemap.json
 feed.xml
+Gemfile
+Gemfile.lock
