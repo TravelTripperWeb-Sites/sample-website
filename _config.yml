@@ -1,0 +1,4 @@
+# Build settings
+default_lang: 'en'
+languages: ['en', 'ru']
+exclude_from_localization: []

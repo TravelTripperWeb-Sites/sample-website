@@ -1,0 +1,5 @@
+---
+- title_localized:
+    ru: 'rus title'
+    en: 'eng title'
+- title: 'not localized title'

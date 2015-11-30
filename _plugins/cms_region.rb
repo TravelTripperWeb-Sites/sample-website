@@ -7,13 +7,14 @@ module Jekyll
     end
 
     def render(context)
-      root_path = context.registers[:site].source
+      site = context.registers[:site]
+      root_path = site.source
       page_folder = context['page']['name']
-      region_data_path = File.join(root_path, '_data', '_regions', page_folder)
+      region_data_path = File.join(root_path, '_data', '_regions', site.active_lang, page_folder)
       include_data_path = File.join(root_path, '_includes', '_regions')
 
       region_items = read_data_json_from(region_data_path)
-      raise "Array is expected in #{@ilename}, but #{region_items.class.to_s} found" unless region_items.instance_of? Array
+      raise "Array is expected in #{@filename}, but #{region_items.class.to_s} found" unless region_items.instance_of? Array
 
       wrap('div', 'class' => 'tt-region', 'data-region' => File.join(page_folder, @filename)) do
         region_items.each_with_index.map do |ped, index|
