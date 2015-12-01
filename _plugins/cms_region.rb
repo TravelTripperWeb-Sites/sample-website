@@ -9,7 +9,7 @@ module Jekyll
     def render(context)
       site = context.registers[:site]
       root_path = site.source
-      page_folder = context['page']['name']
+      page_folder = context['page']['path']
       region_data_path = File.join(root_path, '_data', '_regions', site.active_lang, page_folder)
       include_data_path = File.join(root_path, '_includes', '_regions')
 

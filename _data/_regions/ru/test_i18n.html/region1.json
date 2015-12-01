@@ -1,0 +1,11 @@
+[
+  {
+    "_template": "html",
+    "content": "RU: <b>H</b>TML Content"
+  },
+  {
+    "_template": "href",
+    "url": "https://www.google.com",
+    "name": "Goooogle Rus"
+  }
+]

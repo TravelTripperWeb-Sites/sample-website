@@ -112,8 +112,6 @@ module Jekyll
       path = polypath(dest)
       return if skip?(path)
       output_orig = output.clone
-      relativize_urls(site.active_lang)
-      process_static_urls
       write_orig(dest)
       self.output = output_orig
       site.file_langs[path] = lang
@@ -135,30 +133,6 @@ module Jekyll
         return site.file_langs[path] == site.active_lang
       end
       true
-    end
-
-    def process_static_urls
-      output.gsub!(static_url_regex, "href=\"#{site.baseurl}/" + '\1"')
-    end
-
-    def relativize_urls(lang)
-      return if lang == site.default_lang
-      output.gsub!(relative_url_regex, "href=\"#{site.baseurl}/#{lang}/" + '\1"')
-    end
-
-    def relative_url_regex
-      n = ''
-      site.exclude.each do |x|
-        n += "(?!#{x}\/)"
-      end
-      baseurl = site.baseurl.gsub(%r{\/}, '')
-      # regex that looks for all relative urls except for excluded files
-      %r{href=\"\/#{baseurl == '' ? '' : baseurl + '\/'}((?:#{n}[^,'\"\s\/?\.#-]+\.?)*(?:\/[^\]\[\)\(\"\'\s]*)?)\"}
-    end
-
-    def static_url_regex
-      baseurl = site.baseurl.gsub(%r{\/}, '')
-      %r{href-static=\"\/#{baseurl == '' ? '' : baseurl + '\/'}((?:[^,'\"\s\/?\.#-]+\.?)*(?:\/[^\]\[\)\(\"\'\s]*)?)\"}
     end
   end
 

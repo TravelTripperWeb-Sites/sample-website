@@ -4,14 +4,21 @@ title_localized:
   ru: RU Region Example
   en: EN Region Example
 permalink_localized:
-  ru: ru_test
-  en: test
+  ru: /ru_test
+  en: /test
 desc_localized:
   ru: ru desc
   en: en desc
 keywords_localized:
   ru: ru keywords
-  en: end keywords
+  en: en keywords
 ---
 
 {% t regions %}
+<a href="{% permalink_url / %}">home</a>
+<a href="{% permalink_url /test_index/ %}">test</a>
+
+{% region region1 %}
+{% region region2 %}
+
+
