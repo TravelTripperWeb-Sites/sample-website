@@ -16,3 +16,12 @@ title: Region Example
   author: {{ post.author.name }}
 {% endfor %}
 
+<h1>Pages:</h1>
+
+<ul>
+  {% for p in site.pages %}
+    <li>
+      <a href="{{ p.url }}">page: {{ p.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

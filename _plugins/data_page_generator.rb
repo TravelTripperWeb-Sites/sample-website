@@ -13,7 +13,7 @@ module Jekyll
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), template + ".html")
       self.data.merge!(data)
-      self.data['title'] = data[name]
+      self.data['title'] ||= name
     end
 
     private
