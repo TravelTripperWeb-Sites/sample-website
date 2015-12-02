@@ -16,7 +16,7 @@ module Jekyll
       region_items = read_data_json_from(region_data_path)
       raise "Array is expected in #{@filename}, but #{region_items.class.to_s} found" unless region_items.instance_of? Array
 
-      wrap('div', 'class' => 'tt-region', 'data-region' => File.join(page_folder, @filename)) do
+      wrap('div', 'class' => 'tt-region', 'data-region' => File.join(site.active_lang, page_folder, @filename)) do
         region_items.each_with_index.map do |ped, index|
           include(include_data_path, context, index, ped)
         end.join
