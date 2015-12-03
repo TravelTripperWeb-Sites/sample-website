@@ -43,18 +43,9 @@ class SitemapGenerator
   end
 
   def localized_urls(site, page)
-    {}.tap do |result|
-      site.config['languages'].each do |locale|
-        url = if page.data['permalink_localized'] && page.data['permalink_localized'][locale]
-                page.data['permalink_localized'][locale]
-              else
-                page.url
-              end
-        url = "/#{locale}" + url unless locale == site.config['default_lang']
-
-        result[locale] = url
-      end
-    end
+    site.config['languages'].map do |locale|
+      { locale => page.url(locale) }
+    end.inject({}, :merge)
   end
 
   private
