@@ -26,6 +26,7 @@ def map_content(content, &block)
           h[key] = map_content(value, &block)
         else
           h[k] = v
+          h[key] = value # leave original values
         end
       end
     end

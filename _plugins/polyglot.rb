@@ -9,7 +9,7 @@ module Jekyll
   # provides aliased methods to direct site.write to output into seperate
   # language folders
   class Site
-    attr_reader :default_lang, :languages, :exclude_from_localization
+    attr_reader :default_lang, :languages
     attr_accessor :file_langs, :active_lang
 
     def prepare
@@ -17,7 +17,6 @@ module Jekyll
       @default_lang = config['default_lang'] || 'en'
       @languages = config['languages'] || ['en']
       (@keep_files << @languages - [@default_lang]).flatten!
-      @exclude_from_localization = config['exclude_from_localization'] || []
       @active_lang = @default_lang
     end
 
@@ -66,7 +65,6 @@ module Jekyll
 
     def process_active_language
       @dest = @dest + '/' + @active_lang
-      @exclude += config['exclude_from_localization']
       process_orig
     end
 
@@ -136,22 +134,11 @@ module Jekyll
     end
   end
 
-  # Alteration to Jekyll StaticFile
-  # provides aliased methods to direct write to skip files
-  # excluded from localization
   class StaticFile
     alias_method :write_orig, :write
     def write(dest)
-      return false if exclude_from_localization?
+      return false unless @site.active_lang == @site.default_lang
       write_orig(dest)
-    end
-
-    def exclude_from_localization?
-      return false if @site.active_lang == @site.default_lang
-      @site.exclude_from_localization.each do |e|
-        return true if relative_path[1..-1].start_with?(e)
-      end
-      false
     end
   end
 end

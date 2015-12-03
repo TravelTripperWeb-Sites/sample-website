@@ -4,11 +4,14 @@
 
 module Jekyll
   class DataPage < Page
-    def initialize(site, base, dir, data, name, template)
+    attr_reader :data_source
+
+    def initialize(site, base, dir, data, name, template, source_dir)
       @site = site
       @base = base
       @dir = dir
       @name = sanitize_filename(name) + ".html"
+      @data_source = source_dir + '/' + sanitize_filename(name) + '.yml'
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), template + ".html")
@@ -29,6 +32,7 @@ module Jekyll
 
     def generate(site)
       data = site.config['page_gen']
+      return if site.active_lang != site.default_lang
       if data
         data.each do |data_spec|
           # todo: check input data correctness
@@ -36,9 +40,9 @@ module Jekyll
           dir = data_spec['dir'] || data_spec['data']
 
           if site.layouts.key? template
-            records =  site.data[data_spec['data']]
+            records = site.data[data_spec['data']]
             records.each do |record|
-              page = DataPage.new(site, site.source, dir, record[1], record[0], template)
+              page = DataPage.new(site, site.source, dir, record[1], record[0], template, data_spec['data'])
               site.pages << page
             end
           else
