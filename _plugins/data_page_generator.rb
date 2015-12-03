@@ -12,7 +12,7 @@ module Jekyll
       @dir = dir
       @name = sanitize_filename(name) + ".html"
       @data_source = source_dir + '/' + sanitize_filename(name) + '.yml'
-      @source_path = File.join(base, '_layouts'), template + ".html"
+      @source_path = '_layouts/' + template + '.html'
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), template + ".html")
