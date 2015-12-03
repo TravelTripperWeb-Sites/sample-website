@@ -4,7 +4,7 @@
 
 module Jekyll
   class DataPage < Page
-    attr_reader :data_source
+    attr_reader :data_source, :source_path
 
     def initialize(site, base, dir, data, name, template, source_dir)
       @site = site
@@ -12,6 +12,7 @@ module Jekyll
       @dir = dir
       @name = sanitize_filename(name) + ".html"
       @data_source = source_dir + '/' + sanitize_filename(name) + '.yml'
+      @source_path = File.join(base, '_layouts'), template + ".html"
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), template + ".html")
@@ -20,11 +21,10 @@ module Jekyll
     end
 
     private
-
-    # strip characters and whitespace to create valid filenames, also lowercase
-    def sanitize_filename(name)
-      return name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-    end
+      # strip characters and whitespace to create valid filenames, also lowercase
+      def sanitize_filename(name)
+        return name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+      end
   end
 
   class DataPagesGenerator < Generator

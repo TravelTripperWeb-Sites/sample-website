@@ -33,8 +33,10 @@ class SitemapGenerator
       label = path.last
       path = path[0..-2] + ['__PAGES__']
 
+      source_path = page.is_a?(Jekyll::DataPage) ? page.source_path : page.path
+
       sitemap[*path] ||= []
-      sitemap[*path] << { label: page.data['label'] || page.data['title'] || label, locales: localized_urls(site, page), data_source: (page.is_a?(Jekyll::DataPage) && page.data_source) || nil } unless page.data['editable'] === false
+      sitemap[*path] << { label: page.data['label'] || page.data['title'] || label, locales: localized_urls(site, page), data_source: (page.is_a?(Jekyll::DataPage) && page.data_source) || nil, source_path: source_path } unless page.data['editable'] === false
     end
 
     sitemap['__REGIONS__'] = site.data['regions']
