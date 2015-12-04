@@ -86,7 +86,7 @@ As a result '/index.html' will show:
 >
 > Index page content
 >
-> translation missing: en.signature```
+> translation missing: en.signature
 
 A russian translation of the page will show all keys as missed.
 
@@ -108,6 +108,53 @@ The reference to title's value will use current language, so EN and RU pages wil
 
 ## References to a page's translation
 **WIP**
+
+## Editable Regions
+
+The plugins allow to define a region which is editable via CMS. 
+Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced to from the item's data). Regions are unique for their hosting page and each language. 
+
+A liquid tag "region" requires one constant parameter which defines region's name. Add the next rows to `index.html`:
+```
+{% region region1 %}
+```
+To edit region's content manually create `_data/_regions/en/index.html/region1.json` as follows:
+```
+[
+    {
+        "_template": "html",
+        "content": "<p>1st item</p>"
+    },
+    {
+        "_template": "html",
+        "content": "<p>2nd item</p>"
+    }
+]
+```
+Rendered page includes:
+
+> 1st item
+> 2nd item
+
+Translated version of the page won't show any region's content since we didn't create it.
+
+Regions' data is stored in the folder named `_data/_regions/<language>/<page_path>/<region_name>.json` folder. File can be created by the CMS when a user edits region's content. If the is created by programmer it must be a valid JSON file, including array of region's items. Every item should include `_template` and `content` property.
+
+Region item's template is used to render the data. `html` template is buit-in, however others template can be created or the `html` template can be overwritten. Create `_data/_includes/_regions/html` file:
+```
+Custom HTML template: {{include.instance.content}}
+```
+
+After the update the result it:
+> Custom HTML template:
+> 1st item
+>
+> Custom HTML template:
+> 2nd item
+
+`include.instance` is a reference to rendered region item, so any additional fields can be used both in the Region item and its template. The CMS allows users to edit HTML region items, a possibility to create new editors will be added later.
+
+### Includes and Editable Regions
 
 ## Data Pages
 **TBD**
