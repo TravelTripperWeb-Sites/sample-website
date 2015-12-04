@@ -155,6 +155,16 @@ After the update the result it:
 `include.instance` is a reference to rendered region item, so any additional fields can be used both in the Region item and its template. The CMS allows users to edit HTML region items, a possibility to create new editors will be added later.
 
 ### Includes and Editable Regions
+Regions can be defined in include files. In this case region data is loaded for a target page. For example, create include file `_includes/reg_sample.html`. 
+```
+Included region: {% region region1 %}
+```
+
+Add liquid `include` tag into `index.html`: 
+```
+{% include reg_sample.html %}
+```
+As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region`, secondly through the included file.
 
 ## Data Pages
 **TBD**
