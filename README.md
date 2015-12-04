@@ -170,7 +170,73 @@ Add liquid `include` tag into `index.html`:
 As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region`, secondly through the included file.
 
 ## Data Pages
-**TBD**
+Modified version of [https://github.com/avillafiorita/jekyll-datapage_gen](Jekyll Data Pages Generator) is used to generate multiple pages using the same template. The plugin allows to define data array, rendering template and output folder to generate similar pages for every data item.
 
+*CMS will provide the UI for editing source data. The plugin supports any valid data format, built-in or any additional from a 3rd party plugin, however CMS editing feature takes into account only JSON files as editable.*
+
+To define data for Data Pages generation a separate folder in the `_data` folder should be used. For example, create folders and files as follows:
+
+**TBD the difference between files and lists**
+
+> _data/authors.json
+
+```
+[    
+    {
+        "id": 1,
+        "name": "Jack London"
+    }
+]
+```
+> _data/books/book1.json
+
+```
+{
+    "author_id": 1,
+    "title": "1st book",
+    "description": "1st description"
+}
+```
+> _data/books/book2.json
+
+```
+{
+    "author_id": 1,
+    "title": "1st book",
+    "description": "1st description"
+}
+```
+
+Add layout to render Books:
+
+> _layout/book.html
+
+```
+---
+layout: default
+---
+<p>
+    <i>{{ page.title }}</i> by <b>{{ page.author.name }}</b>. <br>
+    {{ page.description }}
+</p>
+```
+
+Add Data Page definition into `_config.yml`
+```
+page_gen:
+  - data: 'books'
+    template: 'book'
+    dir: 'book'
+```
+
+The output site include dynamic pages, e.g. `book/book1.html`
+> *1st book* by **Jack London**. 
+
+> 1st description
+
+### References to Data Pages
+**TBD**
+### Data Pages localization
+**TBD**
 ## Data References
 **TBD**
