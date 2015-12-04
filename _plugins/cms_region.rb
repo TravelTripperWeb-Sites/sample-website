@@ -25,13 +25,18 @@ module Jekyll
         end.join
       end
     rescue Exception => error
+      print error.message, "\n"
+      print error.backtrace.join("\n")
       return 'Error: ' + error.message
     end
 
     private
 
     def include(include_data_path, context, index, ped)
-      liquid = Liquid::Template.parse(read_include(include_data_path, ped['_template']))
+      template = ped['_template']
+      raise "'_template' property not found in \n#{ped.to_s}" if template.nil?
+
+      liquid = Liquid::Template.parse(read_include(include_data_path, template, default_content(template)))
 
       context['include'] = {'instance' => ped}
       wrap('div', 'class' => 'tt-region_ped', 'data-ped-index' => index, 'data-ped-type' => ped['_template']) do
@@ -39,11 +44,14 @@ module Jekyll
       end
     end
 
-    def read_include(include_data_path, filename)
+    def read_include(include_data_path, filename, default_content = nil)
       template_path = File.join(include_data_path, filename)
-      raise "Can't find template file #{template_path}" unless File.exists?(template_path)
-      File.open(template_path, 'r') do |file|
-        file.read
+      if File.exists?(template_path)
+        File.open(template_path, 'r') do |file|
+          file.read
+        end
+      else
+        default_content || raise("Can't find template file #{template_path}")
       end
     end
 
@@ -63,6 +71,14 @@ module Jekyll
       "<#{tag} #{attrs}>#{yield}</#{tag}>"
     end
 
+    def default_content(template)
+      case template
+        when 'html'
+          '{{include.instance.content}}'
+        else
+          nil
+      end
+    end
   end
 end
 
