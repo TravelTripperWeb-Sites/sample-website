@@ -134,6 +134,7 @@ To edit region's content manually create `_data/_regions/en/index.html/region1.j
 Rendered page includes:
 
 > 1st item
+
 > 2nd item
 
 Translated version of the page won't show any region's content since we didn't create it.
@@ -147,9 +148,11 @@ Custom HTML template: {{include.instance.content}}
 
 After the update the result it:
 > Custom HTML template:
+
 > 1st item
 >
 > Custom HTML template:
+
 > 2nd item
 
 `include.instance` is a reference to rendered region item, so any additional fields can be used both in the Region item and its template. The CMS allows users to edit HTML region items, a possibility to create new editors will be added later.
