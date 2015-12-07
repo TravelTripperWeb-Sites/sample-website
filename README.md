@@ -108,6 +108,20 @@ The reference to title's value will use current language, so EN and RU pages wil
 
 ## References to a page's translation
 **WIP**
+```
+<select id="language" onchange="location = this.options[this.selectedIndex].value;">
+
+  {% for lang in site.languages %}
+  <option   {% if lang == site.active_lang %} selected="true" {% endif%} value="{{ page | url: lang }}">{{ lang | upcase }}</option>
+
+  {% endfor %}
+</select>
+```
+
+Reference to another page (e.g. `events.html`):
+```
+{% permalink_url /events %}
+```
 
 ## Editable Regions
 
