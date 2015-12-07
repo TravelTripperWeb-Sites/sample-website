@@ -10,7 +10,8 @@ def assign_associations(content)
   map_content(content) do |key, value|
     if key.end_with?('_id') && value.is_a?(Fixnum)
       k = key.gsub('_id', '')
-      [k, content[k + 's'].detect{|item| item['id'] == value }] # TODO correct pluralize (may be use activesupport)
+      obj = content[k + 's'].kind_of?(Hash) ? content[k + 's'][value.to_s] : content[k + 's'].detect{|item| item['id'] == value }
+      [k, obj]
     end
   end
 end

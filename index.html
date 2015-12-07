@@ -21,3 +21,13 @@ label: Main Page
 <a href='{% permalink_url /events %}'>Events test link</a>
 <br>
 <a href='{% permalink_url /test_i18n %}'>i18n test link</a>
+
+<hr>
+
+<h1>Sample Books:</h1>
+{% for book in site.data.books %}
+  <h2>{{ book[1].title }}</h2>
+  author: {{ book[1].writer.name }}
+{% endfor %}
+
+
