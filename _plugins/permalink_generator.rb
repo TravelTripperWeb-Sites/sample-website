@@ -1,6 +1,9 @@
 module Jekyll
   module PermalinkGenerator
-    def permalink_url(path_or_page, data_dir = nil, locale = nil)
+    def permalink_url(path_or_page, *args)
+      data_dir = args.first && args.first['data_dir']
+      locale = args.first && args.first['locale']
+
       if path_or_page.kind_of?(Hash)
         key = 'url' + (locale.nil? ? '' : "_#{locale}" )
         path_or_page[key]

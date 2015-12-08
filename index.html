@@ -22,13 +22,13 @@ label: Main Page
 <br>
 <a href='{{ '/test_i18n' | permalink_url }}'>i18n test link</a>
 <br>
-<a href='{{ 'event1' | permalink_url: 'events' }}'>test var</a>
+<a href='{{ 'event1' | permalink_url: data_dir: 'events' }}'>test var</a>
 <br>
-<a href='{{ '/events' | permalink_url: nil, 'ru' }}'>RU Events test link</a>
+<a href='{{ '/events' | permalink_url: locale: 'ru' }}'>RU Events test link</a>
 <br>
-<a href='{{ 'event1' | permalink_url: 'events', 'ru' }}'>test ru var</a>
+<a href='{{ 'event1' | permalink_url: data_dir: 'events', locale: 'ru' }}'>test ru var</a>
 <br>
-<a href='{{ page | permalink_url: nil, 'ru' }}'>RUSSIAN</a>
+<a href='{{ page | permalink_url: locale: 'ru' }}'>RUSSIAN</a>
 
 <hr>
 
