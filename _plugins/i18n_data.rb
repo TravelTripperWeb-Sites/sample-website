@@ -10,11 +10,6 @@ module Jekyll
       @default_locale = @site.default_lang
 
       @content = assign_associations(translate_data(@content, @locale, @default_locale))
-
-#      p @content['writers']
-      p @content['books']
-
-      @content
     end
   end
 end
