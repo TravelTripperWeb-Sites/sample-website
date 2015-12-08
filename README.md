@@ -218,7 +218,7 @@ Modified version of [https://github.com/avillafiorita/jekyll-datapage_gen](Jekyl
 
 To define data for Data Pages generation a separate folder in the `_data` folder should be used. For example, create folders and files as follows:
 
-**TBD the difference between files and lists**
+**Data Pages can be generated only if they are based on object files in one folder. Other data also can be stored as a single data-file (objects list/array).**
 
 > _data/authors.json
 
@@ -230,22 +230,44 @@ To define data for Data Pages generation a separate folder in the `_data` folder
     }
 ]
 ```
+
+> _data/groups/group1.json
+
+```
+{
+  "id": 1,
+  "name": "Group 1"
+}
+```
+
+> _data/groups/group2.json
+
+```
+{
+  "id": 2,
+  "name": "Group 2"
+}
+```
+
 > _data/books/book1.json
 
 ```
 {
-    "author_id": 1,
-    "title": "1st book",
-    "description": "1st description"
+  "author_id": 1,
+  "group_id": 2,
+  "title": "1st book",
+  "description": "1st description"
 }
 ```
+
 > _data/books/book2.json
 
 ```
 {
-    "author_id": 1,
-    "title": "1st book",
-    "description": "1st description"
+  "author_id": 1,
+  "group_id": 1,
+  "title": "2nd book",
+  "description": "2nd description",
 }
 ```
 
@@ -258,6 +280,7 @@ Add layout to render Books:
 layout: default
 ---
 <p>
+    <h3>Group: {{ page.group.name }}</h3>
     <i>{{ page.title }}</i> by <b>{{ page.author.name }}</b>. <br>
     {{ page.description }}
 </p>
@@ -272,6 +295,8 @@ page_gen:
 ```
 
 The output site include dynamic pages, e.g. `book/book1.html`
+> #### Group: Group 2
+
 > *1st book* by **Jack London**. 
 
 > 1st description
