@@ -32,4 +32,18 @@ module Jekyll
       name.to_s =~ /url_(#{site.languages.join('|')})/ || super
     end
   end
+
+  module LocalizedPageUrlFilter
+    def url(page, language = nil)
+      key = 'url' + (language.nil? ? '' : "_#{language}" )
+      if page.key? key
+        page[key]
+      else
+        "Error: invalid parameters, there is no '#{key}' property!"
+      end
+    end
+  end
 end
+
+
+Liquid::Template.register_filter(Jekyll::LocalizedPageUrlFilter)
