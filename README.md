@@ -107,18 +107,46 @@ For example: `page.title` is used in the `default.html` layout file. It can be l
 The reference to title's value will use current language, so EN and RU pages will have translated titles accordingly.
 
 ## References to a page's translation
-**WIP**
+
+Every Liquid's `Page` object has properties named `url_<language>` for each language from `_config.yml` to get a link to a particular page's translation. To pass language parameter as a variable there is a filter `url` which allows to extract a localized URL using simple synatax:
+```
+{{ page | url: language_variable }}
+```
+
+To iterate over languages the `site.languages` variable can be used, for example:
+```
+<p>Available languages:</p>
+<ul>
+    {% for lang in site.languages %}
+        <li>{{ lang | upcase }}</li>
+    {% endfor %}
+</ul>
+```
+
+Returns:
+
+> Available languages:
+>
+> * EN
+> * RU
+
+To handle current language there is `site.active_lang` variable. Liquid `if` tag allows highlighing current page's language.
+
+The entire example of a language drop-down is shown below:
+
 ```
 <select id="language" onchange="location = this.options[this.selectedIndex].value;">
-
   {% for lang in site.languages %}
-  <option   {% if lang == site.active_lang %} selected="true" {% endif%} value="{{ page | url: lang }}">{{ lang | upcase }}</option>
-
+    <option {% if lang == site.active_lang %} selected="true" {% endif%} value="{{ page | url: lang }}">
+      {{ lang | upcase }}
+    </option>
   {% endfor %}
 </select>
 ```
 
-Reference to another page (e.g. `events.html`):
+## Reference to other pages
+*WIP*
+(e.g. `events.html`):
 ```
 {% permalink_url /events %}
 ```
