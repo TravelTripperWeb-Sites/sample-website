@@ -10,8 +10,8 @@ def assign_associations(content)
   map_content(content) do |key, value|
     if key.end_with?('_id') && value.is_a?(Fixnum)
       k = key.gsub('_id', '')
-      obj = content[k + 's'].kind_of?(Hash) ? content[k + 's'][value.to_s] : content[k + 's'].detect{|item| item['id'] == value }
-      [k, obj]
+      obj = content[k + 's'].detect{|item| value == (item.kind_of?(Array) ? item.last['id'] || item.first : item['id']) }
+      [k, content[k + 's'].kind_of?(Hash) ? obj.last : obj]
     end
   end
 end
