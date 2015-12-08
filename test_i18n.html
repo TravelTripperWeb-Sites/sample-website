@@ -15,8 +15,8 @@ keywords_localized:
 ---
 
 {% t regions %}
-<a href="{% permalink_url / %}">home</a>
-<a href="{% permalink_url /test_index/ %}">test</a>
+<a href="{{ '/' | permalink_url }}">home</a>
+<a href="{{ '/test_index/' | permalink_url }}">test</a>
 
 {% region region1 %}
 {% region region2 %}

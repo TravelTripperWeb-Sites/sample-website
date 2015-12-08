@@ -11,7 +11,7 @@ def assign_associations(content)
     if key.end_with?('_id') && value.is_a?(Fixnum)
       k = key.gsub('_id', '')
       obj = content[k + 's'].detect{|item| value == (item.kind_of?(Array) ? item.last['id'] || item.first : item['id']) }
-      [k, content[k + 's'].kind_of?(Hash) ? obj.last : obj]
+      [k, content[k + 's'].kind_of?(Hash) && !obj.nil? ? obj.last : obj]
     end
   end
 end

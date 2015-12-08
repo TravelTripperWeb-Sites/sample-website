@@ -18,9 +18,15 @@ label: Main Page
   author: {{ post.author.name }}
 {% endfor %}
 
-<a href='{% permalink_url /events %}'>Events test link</a>
+<a href='{{ '/events' | permalink_url }}'>Events test link</a>
 <br>
-<a href='{% permalink_url /test_i18n %}'>i18n test link</a>
+<a href='{{ '/test_i18n' | permalink_url }}'>i18n test link</a>
+<br>
+<a href='{{ 'event1' | permalink_url: 'events' }}'>test var</a>
+<br>
+<a href='{{ '/events' | permalink_url: nil, 'ru' }}'>RU Events test link</a>
+<br>
+<a href='{{ 'event1' | permalink_url: 'events', 'ru' }}'>test ru var</a>
 
 <hr>
 

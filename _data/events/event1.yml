@@ -1,5 +1,8 @@
 title: this is title for event1
 image_url: http://wallpapersyet.com/wp-content/uploads/2015/08/HD-Nature-Animal-Pic.jpg
+permalink_localized:
+  en: first_event
+  ru: first_event_ru
 short_description: this is short description for event1
 location: Samara
 full_description: This is full description for event1

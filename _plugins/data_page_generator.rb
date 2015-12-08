@@ -53,22 +53,5 @@ module Jekyll
       end
     end 
   end
-
-  module DataPageLinkGenerator
-    # use it like this: {{input | datapage_url: dir}}
-    # output: dir / input .html
-    def datapage_url(input, dir)
-      dir + "/" + sanitize_filename(input) + ".html"
-    end
-
-    private
-
-    # strip characters and whitespace to create valid filenames, also lowercase
-    def sanitize_filename(name)
-      return name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-    end
-  end
-
 end
 
-Liquid::Template.register_filter(Jekyll::DataPageLinkGenerator)
