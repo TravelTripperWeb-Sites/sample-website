@@ -32,7 +32,7 @@ module Jekyll
 
     def generate(site)
       data = site.config['page_gen']
-      return if site.active_lang != site.default_lang
+
       if data
         data.each do |data_spec|
           # todo: check input data correctness
