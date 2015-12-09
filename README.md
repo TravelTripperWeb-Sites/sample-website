@@ -106,10 +106,37 @@ For example: `page.title` is used in the `default.html` layout file. It can be l
 ```
 The reference to title's value will use current language, so EN and RU pages will have translated titles accordingly.
 
-## References to a page's translation
+## Permalinks 
+By default output file name is not changed when page is generated. Programmers and CMS's users can modify output URLs using `permalink` property in Front Matter section. This propery allows to rename a page's URL in different locales. For example, add localized permalink to `index.html`:
+```
+...
+permalink_localized:
+  ru: home
+...
+```
 
-*FIX IT*
-Every Liquid's `Page` object has properties named `url_<language>` for each language from `_config.yml` to get a link to a particular page's translation. To pass language parameter as a variable there is a filter `url` which allows to extract a localized URL using simple synatax:
+Missing english permalink translation will use `/index.html` filename, and russian version will be available at `/ru/home.html`.
+
+## References to a page
+To create a hyper link to another page `permalink` filter is created. The syntax for it is:
+```
+{{ <page|path> | permalink[: locale:<locale>] }}
+```
+Where:
+* `page`: Liquid's object: represents a current rendering page.
+* `path`: file's path, e.g. `/dir/file-name` for `/dir/file-name.html`
+* `locale: <locale-value>`: a locale value/variable, to get a link to a particular translation. If locale is skipped then current locale is used.
+
+
+There is additional syntax for Model-based pages:
+```
+{{ <model-file-name> | permalink: model-dir:<model-directory-name>[, locale:<locale>] }}
+```
+which is descrabed in the section below. 
+
+## References to a page's translations
+
+As it was said before to obtain a localized URL there is a simple synatax:
 ```
 {{ page | permalink: locale: <language> }}
 ```
@@ -124,7 +151,7 @@ To iterate over languages the `site.languages` variable can be used, for example
 </ul>
 ```
 
-Returns:
+The code above returns:
 
 > Available languages:
 >
@@ -145,19 +172,12 @@ The entire example of a language drop-down is shown below:
 </select>
 ```
 
-## Reference to other pages
-*WIP*
-(e.g. `events.html`):
-```
-{% permalink_url /events %}
-```
-
 ## Editable Regions
 
 The plugins allow to define a region which is editable via CMS. 
 Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced to from the item's data). Regions are unique for their hosting page and each language. 
 
-A liquid tag "region" requires one constant parameter which defines region's name. Add the next rows to `index.html`:
+A liquid tag `region` requires one constant parameter which defines region's name. Add the next rows to `index.html`:
 ```
 {% region region1 %}
 ```
@@ -212,8 +232,8 @@ Add liquid `include` tag into `index.html`:
 ```
 As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region`, secondly through the included file.
 
-## Data Pages
-Modified version of [https://github.com/avillafiorita/jekyll-datapage_gen](Jekyll Data Pages Generator) is used to generate multiple pages using the same template. The plugin allows to define data array, rendering template and output folder to generate similar pages for every data item.
+## Data Pages (Model-based Pages)
+Modified version of [Jekyll Data Pages Generator](https://github.com/avillafiorita/jekyll-datapage_gen) is used to generate multiple pages using the same template. The plugin allows to define data array, rendering template and output folder to generate similar pages for every data item.
 
 *CMS will provide the UI for editing source data. The plugin supports any valid data format, built-in or any additional from a 3rd party plugin, however CMS editing feature takes into account only JSON files as editable.*
 
