@@ -1,0 +1,7 @@
+# Build settings
+default_lang: 'en'
+languages: ['en', 'ru']
+page_gen:
+  - data: 'events'
+    template: 'event'
+    dir: 'events'

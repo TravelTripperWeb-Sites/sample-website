@@ -1,9 +1,41 @@
 ---
 layout: default
 title: Region Example
+label: Main Page
 ---
 
-Regions:
-<hr/>
+{% t regions %}
+{% t no_translation %}
+<hr>
 {% region region1 %}
 {% region region2 %}
+
+<hr>
+
+<h1>Sample Posts:</h1>
+{% for post in site.data.posts %}
+  <h2>{{ post.title }}</h2>
+  author: {{ post.author.name }}
+{% endfor %}
+
+<a href='{{ '/events' | permalink_url }}'>Events test link</a>
+<br>
+<a href='{{ '/test_i18n' | permalink_url }}'>i18n test link</a>
+<br>
+<a href='{{ 'event1' | permalink_url: data_dir: 'events' }}'>test var</a>
+<br>
+<a href='{{ '/events' | permalink_url: locale: 'ru' }}'>RU Events test link</a>
+<br>
+<a href='{{ 'event1' | permalink_url: data_dir: 'events', locale: 'ru' }}'>test ru var</a>
+<br>
+<a href='{{ page | permalink_url: locale: 'ru' }}'>RUSSIAN</a>
+
+<hr>
+
+<h1>Sample Books:</h1>
+{% for book in site.data.books %}
+  <h2>{{ book[1].title }}</h2>
+  author: {{ book[1].writer.name }}
+{% endfor %}
+
+

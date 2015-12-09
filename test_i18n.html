@@ -1,0 +1,24 @@
+---
+layout: default
+title_localized:
+  ru: RU Region Example
+  en: EN Region Example
+permalink_localized:
+  ru: /ru_test
+  en: /test
+desc_localized:
+  ru: ru desc
+  en: en desc
+keywords_localized:
+  ru: ru keywords
+  en: en keywords
+---
+
+{% t regions %}
+<a href="{{ '/' | permalink_url }}">home</a>
+<a href="{{ '/test_index/' | permalink_url }}">test</a>
+
+{% region region1 %}
+{% region region2 %}
+
+

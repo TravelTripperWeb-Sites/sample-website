@@ -1,0 +1,44 @@
+---
+layout: page
+title: events
+permalink_localized:
+  en: /events/
+  ru: /sub/ru.events/
+---
+
+    <div class="container">
+      <div class="page-header">
+        <h4 class="text-center">Events</h4>
+        hello
+        <br/>
+      </div>
+
+      {% for curr_event in site.data.events %}
+      {% assign event = curr_event[1] %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object" width="200" src="{{ event.image_url }}"/>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ event.title }}</h4>
+                        <p>{{ event.short_description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer clearfix">
+                <p class="pull-left">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    {{ event.location }}&nbsp;&nbsp;
+                </p>
+                <p class="pull-left">
+                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    10 July 2015, {{ event.time }}
+                </p>
+                <a href="{{site.baseurl}}/events/{{ curr_event[0] }}" class="btn btn-default pull-right">Read more</a>
+            </div>
+        </div>
+        <br>
+      {% endfor %}
+    </div>
