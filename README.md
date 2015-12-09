@@ -248,14 +248,15 @@ As a result - the same `region1` block will be rendered twice on the page: first
 The plugins add the ability to reference any Jekyll model data. To activate it:
 * store data objects in a folder or file named as a plural noun, e.g. `_data/_models/groups/*.json` (where each file will be a JSON hash defining a single object) or `_data/_models/groups.json` (which is an array of JSON hash objects).
 * add a numeric `id` field to a each object
-* add an association field to another object using a singular noun and `_id` postfix (e.g. "group_id")
+* add an association field to reference another object using a singular noun and `_id` postfix (e.g. a `book1.json` file might have a field `group_id` that references a particular group object)
 
 **Only simple plural forms ending with 's' are supported by current version. For example, men/man_id reference will not be resolved.**
 
-Objects reference will be autoloaded, so the following syntax works: `book.group.name`. 
+When using this structure, an objects reference will be autoloaded for page generation, so the following syntax can be used in a liquid tag in a page template: `book.group.name`. 
+
 The following example demonstrate this feature using single and multiple files to store data.
 
-Create `_data/authors.json` to store an array of Authors:
+Create `/_data/_models/authors.json` to store an array of Authors:
 
 ```
 [    
@@ -266,8 +267,8 @@ Create `_data/authors.json` to store an array of Authors:
 ]
 ```
 
-Create `_data/groups` folder to store Groups as separate files:
-> _data/groups/group1.json
+Create `/_data/_models/groups` folder to store Groups as separate files:
+> /_data/_models/groups/group1.json
 
 ```
 {
@@ -276,7 +277,7 @@ Create `_data/groups` folder to store Groups as separate files:
 }
 ```
 
-> _data/groups/group2.json
+> /_data/_models/groups/group2.json
 
 ```
 {
@@ -285,9 +286,9 @@ Create `_data/groups` folder to store Groups as separate files:
 }
 ```
 
-Create `_data/books` folder to store Books objects as separate files. Each Book will refer to an Author and Group:
+Create `/_data/_models/books` folder to store Books objects as separate files. Each Book will refer to an Author and Group:
 
-> _data/books/book1.json
+> /_data/_models/books/book1.json
 
 ```
 {
@@ -298,7 +299,7 @@ Create `_data/books` folder to store Books objects as separate files. Each Book 
 }
 ```
 
-> _data/books/book2.json
+> _data/_models/books/book2.json
 
 ```
 {
@@ -308,23 +309,23 @@ Create `_data/books` folder to store Books objects as separate files. Each Book 
   "description": "2nd description",
 }
 ```
-When rendered, every Book object has `author` and `group` properties, e.g. `{{ site.data.books['book1'].author.name }}`
-and `{{ site.data.books['book1'].group.name }}`. The next topic explain how to iterate over that data to render it.
+When rendered, every Book object has `author` and `group` properties, e.g. `{{ site.data.models.books['book1'].author.name }}`
+and `{{ site.data.models.books['book1'].group.name }}`. The next topic explains how to iterate over that data to render it.
 
 ## Data iteration
-This chapter explains standard Liquid approach to iterate over data arrays or hashes.
+This section explains the standard Liquid approach to iterating over data arrays or hashes.
 
 Liquid support  `for` cycle:
 ```
-{% for variable in site.data.<data-object> %}
-  {{ varibale.<property-name> }}
+{% for my_obj in site.data.models.<data-object> %}
+  {{ my_obj.<property-name> }}
 {% endfor %}
 ```
-where "data-object" is a directory of file name (including path and excluding file extention). In case data object represents an array (e.g. CSV file, JSON array or YAML list) the declared variable is set to every list's item one-by-one. In case data object is a directory or JSON/YAML hash the variable represents an array of two items: file name/hash key and file content/hash value.
+where "data-object" is a directory or file name (including the path but excluding a file extention). If the data object represents an array (e.g. CSV file, JSON array or YAML list,) the declared variable `my_obj` is set to each list item for each iteration of the for loop. If the data object is a directory or JSON/YAML hash, then the variable `my_obj` will be an array of two items: the file name or hash key, and the file content or hash value.
 
 To iterate over Books in the previous example the following code can be used:
 ```
-  {% for book in site.data.books %}
+  {% for book in site.data.models.books %}
     Book "{{book[1].title}}" is stored in {{ book[0] }}.json file<br>
   {% endfor %}
 ```
@@ -335,23 +336,23 @@ It returns:
 
 To iterate over Authors array:
 ```
-  {% for author in site.data.authors %}
+  {% for author in site.data.models.authors %}
     {{author.name}}'s id = {{author.id}}<br>
   {% endfor %}
 ```
 The result:
 > Jack London's id = 1
 
-To filter array or hash item `if` tag inside the cycle can be used. Also it's possible to sort arrays using `sort` filter. This filter is not applicable to hashes, but another filter to convert a hash to array will be added later.
+To filter an array or hash item, the `if` tag inside the cycle can be used. It is also possible to sort arrays using the liquid `sort` filter. This filter is not applicable to hashes, but another filter to convert a hash to an array will be added later.
 
 ## Data Pages (Model-based Pages)
-Modified version of [Jekyll Data Pages Generator](https://github.com/avillafiorita/jekyll-datapage_gen) is used to generate multiple pages using the same template. The plugin allows to define data array, rendering template and output folder to generate similar pages for every data item.
+A modified version of [Jekyll Data Pages Generator](https://github.com/avillafiorita/jekyll-datapage_gen) is used to generate multiple pages using the same template. The plugin allows you to configure a data array, a rendering template and an output folder to generate similar pages for every data item.
 
-*CMS will provide the UI for editing source data. The Data Pages plugin supports any valid hash representation, using built-in data formats or any additional from a 3rd party plugin. However CMS editing accepts only JSON files as editable.*
+*The CMS will provide the UI for editing source data. The Data Pages plugin supports any valid hash representation, using built-in data formats or any additional from a 3rd party plugin. However, CMS editing uses only JSON files.*
 
-**Data Pages can be generated only if they are based on a set of object files in one folder.**
+**Data Pages can be generated only if they are based on a set of object files in one folder, not a single file with an array of objects.**
 
-The following example shows how to create a separate pages for the Books (defined earlier). Add a layout `_layout/book.html` to render Books data:
+The following example shows how to create separate pages for each Book object (defined earlier). Add a layout `/_layout/book.html` to render Books data:
 
 ```
 ---
@@ -367,12 +368,12 @@ layout: default
 Add Data Page definition into `_config.yml`
 ```
 page_gen:
-  - data: 'books'
-    template: 'book'
+  - model: 'books'
+    layout: 'book'
     dir: 'book'
 ```
 
-The output site include dynamic pages, e.g. `book/book1.html`
+The output site includes dynamic pages, e.g. `/book/book1.html`
 > #### Group: Group 2
 
 > *1st book* by **Jack London**. 
@@ -380,11 +381,11 @@ The output site include dynamic pages, e.g. `book/book1.html`
 > 1st description
 
 ### References to Data Pages
-Described earlier `permalink` filter supports the following syntax:
+The previously described `permalink` filter supports the following syntax:
 ```
 {{ page | permalink[: locale: <language>] }}
 ```
-Extended syntax for Model-based page is:
+The extended syntax for a Model-based page is:
 ```
 {{ <model-file-name> | permalink: model-dir:<model-directory-name>[, locale:<locale>] }}
 ```
@@ -392,11 +393,11 @@ So, there are three ways to obtain a Data Page permalink:
 
 
 * `{{ page | permalink }}`: link to the current page (Data Page or not)
-* `{{ 'book/book1' | permalink }}`: link to a page by path (Data Page or not)
+* `{{ 'book/book1' | permalink }}`: link to a page by path (Data Page or not), assuming files are generated according to the config above
 * `{{ 'book1' | permalink: model_dir: 'book' }}`: link to a Data Page configured for 'book' directory (**TBD** *why not books?*)
 
 ### Data Pages localization
 Data Pages can be localized using all methods described for standard pages.
 
 ## Static files
-Files which don't have a Front Matter section are treated by Jekyll as static. They are not processed by Liquid preprocessors, not copied to locale folders and not supported by `permalink` filter. Static pages only copied to the output folder once.
+Files which don't have a Front Matter section are treated by Jekyll as static. They are not processed by Liquid preprocessors, not copied to locale folders and can not be referenced by the `permalink` filter. Static pages are only copied to the output folder once.
