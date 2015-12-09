@@ -1,4 +1,6 @@
 # Basic Website Creation
+Described example website is stored here: https://github.com/TravelTripperWeb/sample-website-tutorial
+
 ## Introduction
 This README describes how to create a Jekyll-based website integrated with [TravelTripper CMS](www.traveltripper.io).
 
