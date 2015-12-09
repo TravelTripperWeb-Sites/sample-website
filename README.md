@@ -384,3 +384,9 @@ So, there are three ways to obtain a Data Page permalink:
 * `{{ page | permalink }}`: link to the current page (Data Page or not)
 * `{{ 'book/book1' | permalink }}`: link to a page by path (Data Page or not)
 * `{{ 'book1' | permalink: model_dir: 'book' }}`: link to a Data Page configured for 'book' directory (**TBD** *why not books?*)
+
+### Data Pages localization
+Data Pages can be localized using all methods described for standard pages.
+
+## Static files
+Files which don't have a Front Matter section are treated by Jekyll as static. They are not processed by Liquid preprocessors, not copied to locale folders and not supported by `permalink` filter. Static pages only copied to the output folder once.
