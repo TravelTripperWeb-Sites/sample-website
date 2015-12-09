@@ -175,13 +175,13 @@ The entire example of a language drop-down is shown below:
 ## Editable Regions
 
 The plugins allow you to define a region which is editable via CMS. 
-Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced to from the item's data). Regions are unique for their hosting page and each language. 
+Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced by the item's data). Regions are unique within each page/locale combination. 
 
-A liquid tag `region` requires one constant parameter which defines region's name. Add the next rows to `index.html`:
+The liquid tag `region` requires one constant parameter which defines region's name. Add the following content to `index.html`:
 ```
 {% region region1 %}
 ```
-To edit region's content manually create `_data/_regions/en/index.html/region1.json` as follows:
+To edit the region's content manually, create the file `/_data/_regions/en/index.html/region1.json` as follows:
 ```
 [
     {
@@ -194,22 +194,28 @@ To edit region's content manually create `_data/_regions/en/index.html/region1.j
     }
 ]
 ```
-Rendered page includes:
+The rendered page will now include:
 
 > 1st item
 
 > 2nd item
 
-Translated version of the page won't show any region's content since we didn't create it.
+And contain the html:
 
-Regions' data is stored in the folder named `_data/_regions/<language>/<page_path>/<region_name>.json` folder. File can be created by the CMS when a user edits region's content. If the is created by programmer it must be a valid JSON file, including array of region's items. Every item should include `_template` and `content` property.
+```
+<p>1st item</p><p>2nd item</p>
+```
 
-Region item's template is used to render the data. `html` template is buit-in, however others template can be created or the `html` template can be overwritten. Create `_data/_includes/_regions/html` file:
+Translated versions of the page won't show any region content since we didn't create the json file for them.
+
+Region data is stored in the folder named `/_data/_regions/<language>/<page_path>/<region_name>.json` folder. The file will be created by the CMS when a user edits region's content in the CMS UI. If the file is created manually by a developer, it must be a valid JSON file that defines an array of region items. Every item must include the `_template` and `content` properties.
+
+A region item's template is used to render the data in the generated page. The `html` template is buit-in, however others template can be created or the `html` template can be overwritten. Create the file `/_data/_includes/_regions/html`:
 ```
 Custom HTML template: {{include.instance.content}}
 ```
 
-After the update the result it:
+After the update the generated page would contain:
 > Custom HTML template:
 
 > 1st item
@@ -218,24 +224,30 @@ After the update the result it:
 
 > 2nd item
 
-`include.instance` is a reference to rendered region item, so any additional fields can be used both in the Region item and its template. The CMS allows users to edit HTML region items, a possibility to create new editors will be added later.
+And contain the html:
+
+```
+Custom HTML template: <p>1st item</p>Custom HTML template: <p>2nd item</p>
+```
+
+The variable `include.instance` is a reference to a region item object in the JSON, so any additional fields can be used both in the Region item and its template. The CMS allows users to edit HTML region items, and the ability to create editors for additional regtion item types will be added later.
 
 ### Includes and Editable Regions
-Regions can be defined in include files. In this case region data is loaded for a target page. For example, create include file `_includes/reg_sample.html`. 
+Regions can also be defined in include files, but the region data is still specific to the primary page being rendered. For example, create the include file `/_includes/reg_sample.html`. 
 ```
 Included region: {% region region1 %}
 ```
 
-Add liquid `include` tag into `index.html`: 
+Add a liquid `include` tag into `index.html`: 
 ```
 {% include reg_sample.html %}
 ```
-As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region`, secondly through the included file.
+As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region` tag, and then via the included `reg_sample.html` file.
 
 ## Data references
-The plugins add auto references resolving to any Jekyll data. To activate it:
-* store objects in a folder or file named as a plural noun, e.g. "groups/*.json" or "groups.json"
-* add a numeric `id` field to a target referenced objects 
+The plugins add the ability to reference any Jekyll model data. To activate it:
+* store data objects in a folder or file named as a plural noun, e.g. `_data/_models/groups/*.json` (where each file will be a JSON hash defining a single object) or `_data/_models/groups.json` (which is an array of JSON hash objects).
+* add a numeric `id` field to a each object
 * add an association field to another object using a singular noun and `_id` postfix (e.g. "group_id")
 
 **Only simple plural forms ending with 's' are supported by current version. For example, men/man_id reference will not be resolved.**
