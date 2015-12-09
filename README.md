@@ -1,8 +1,8 @@
-# Sample Website
+# Basic Website Creation
 ## Introduction
-This README describes how to create a Jekyll website integrated with [TravelTripper CMS](www.traveltripper.io).
+This README describes how to create a Jekyll-based website integrated with [TravelTripper CMS](www.traveltripper.io).
 
-CMS's website can be developed locally using a number of plugins. These plugins add CMS integration and some usefull features (see below).
+CMS's website can be developed locally using a number of plugins. These plugins add CMS integration and some usefull features which are described in this tutorial.
 
 ## Starting local development
 
@@ -42,7 +42,7 @@ Index page content
 
 Run `jekyll serve` to view the result in your browser.
 
-This project supports many CMS's extentions but doesn't use it.  
+This project supports many CMS's extentions but doesn't use it yet.  
 
 ## i18n
 To localize a website additional configuration is needed. Create `_config.yml` file as following:
@@ -51,12 +51,12 @@ default_lang: 'en'
 languages: ['en', 'ru']
 ```
 
-This will copy website's pages of additional languages to a locale sub-folder. A default language copy is stored 
+This will copy generated website's pages of additional languages to a locale sub-folder. A default language copy is stored 
 under the project root. So, after this update, we can see `index.html` and `ru/index.html` pages, however their 
 content is the same.
 
 ## Translation tags
-To add localized content (e.g. labels, captions, etc) translation keys should be used.
+To add localized content (e.g. labels, captions, etc) translation keys and files should be used.
 
 Create `_locales` folder and `<language>.yml` files in [i18n format](http://guides.rubyonrails.org/i18n.html). 
 In dynamic pages (which contain [Front Matter](http://jekyllrb.com/docs/frontmatter/)) `t` tag can be used.
@@ -68,7 +68,7 @@ en:
 ```
 **Locale YAML file must be created for every specified language and at least one translation is needed**. 
 Other translation keys can be skipped, 
-in this case error message is shown: `translation missing: <locale>.<key>` as a result of `t` tag rendering.
+in this case warning message is shown: `translation missing: <locale>.<key>` as a result of `t` tag rendering.
 
 Update `index.html` using `translate` tag:
 
@@ -108,9 +108,10 @@ The reference to title's value will use current language, so EN and RU pages wil
 
 ## References to a page's translation
 
+*FIX IT*
 Every Liquid's `Page` object has properties named `url_<language>` for each language from `_config.yml` to get a link to a particular page's translation. To pass language parameter as a variable there is a filter `url` which allows to extract a localized URL using simple synatax:
 ```
-{{ page | url: language_variable }}
+{{ page | permalink: locale: <language> }}
 ```
 
 To iterate over languages the `site.languages` variable can be used, for example:
