@@ -1,14 +1,14 @@
 # Basic Website Creation
-Described example website is stored here: https://github.com/TravelTripperWeb/sample-website-tutorial
+The described example website is stored here: https://github.com/TravelTripperWeb/sample-website-tutorial
 
 ## Introduction
 This README describes how to create a Jekyll-based website integrated with [TravelTripper CMS](www.traveltripper.io).
 
-CMS's website can be developed locally using a number of plugins. These plugins add CMS integration and some usefull features which are described in this tutorial.
+A TravelTripper CMS website can be developed locally using a number of plugins. These plugins add CMS integration and some usefull features which are described in this tutorial.
 
 ## Starting local development
 
-To CMS website's development the following is needed: 
+To develop a CMS website the following is needed: 
 
 * Ruby and Gem
 * Bundler: `gem install bundler`
@@ -19,8 +19,8 @@ To CMS website's development the following is needed:
 
 To create an empty project:
 
-* copy `_plugins` folder from the [repository](_plugins)
-* create default layout file: `_layouts/default.html`
+* copy `/_plugins` folder from the [repository](_plugins) to the root of your project.
+* create default layout file: `/_layouts/default.html`
 
 ```
 <html>
@@ -42,35 +42,34 @@ title: Page Title
 Index page content
 ```
 
-Run `jekyll serve` to view the result in your browser.
+Run `jekyll serve` in the root of your project to view the result in your browser at http://localhost:4000.
 
-This project supports many CMS's extentions but doesn't use it yet.  
+This project supports many CMS extentions but doesn't use them yet.  
 
 ## i18n
-To localize a website additional configuration is needed. Create `_config.yml` file as following:
+To localize a website, additional configuration is needed. Create `/_config.yml` file as following:
 ```
 default_lang: 'en'
 languages: ['en', 'ru']
 ```
 
-This will copy generated website's pages of additional languages to a locale sub-folder. A default language copy is stored 
-under the project root. So, after this update, we can see `index.html` and `ru/index.html` pages, however their 
-content is the same.
+This will copy pages for each non-default locale from the generated website to a locale sub-folder. A default language copy is stored 
+under the project root. So, after this update, we will see `/index.html` and `/ru/index.html` pages. However their 
+content will be the same.
 
 ## Translation tags
-To add localized content (e.g. labels, captions, etc) translation keys and files should be used.
+To add localized content (e.g. labels, captions, etc), translation keys and files should be used.
 
-Create `_locales` folder and `<language>.yml` files in [i18n format](http://guides.rubyonrails.org/i18n.html). 
-In dynamic pages (which contain [Front Matter](http://jekyllrb.com/docs/frontmatter/)) `t` tag can be used.
+Create a `/_locales` folder and `/_locales/<language>.yml` files in [i18n format](http://guides.rubyonrails.org/i18n.html). 
+In dynamic pages (which contain [Front Matter](http://jekyllrb.com/docs/frontmatter/)), the liquid tag `t` can be used.
 
-For example, create `en.yml` file:
+For example, create `/_locales/en.yml` file:
 ```
 en:
   hello: 'EN hello label'
 ```
-**Locale YAML file must be created for every specified language and at least one translation is needed**. 
-Other translation keys can be skipped, 
-in this case warning message is shown: `translation missing: <locale>.<key>` as a result of `t` tag rendering.
+**A YAML locale file must be created for every specified language in /_config.yml, and at least one translation is needed in each file**. 
+Additional translation keys can be skipped, and in that case a warning message is shown: `translation missing: <locale>.<key>` as a result of `t` tag rendering.
 
 Update `index.html` using `translate` tag:
 
@@ -90,11 +89,11 @@ As a result '/index.html' will show:
 >
 > translation missing: en.signature
 
-A russian translation of the page will show all keys as missed.
+A russian translation of the page (`/ru/index.html`) will show all keys as missed.
 
 ## Localizable properties
 
-Page's Front Matter can contain different variables which might be rendered via Liquid code: `{{ page.variable_name }}`.
+A page's [Front Matter](http://jekyllrb.com/docs/frontmatter/) can contain different variables which might be rendered via Liquid the liquid code: `{{ page.variable_name }}`.
 For example: `page.title` is used in the `default.html` layout file. It can be localized using the following syntax:
 
 ```
@@ -109,7 +108,7 @@ For example: `page.title` is used in the `default.html` layout file. It can be l
 The reference to title's value will use current language, so EN and RU pages will have translated titles accordingly.
 
 ## Permalinks 
-By default output file name is not changed when page is generated. Programmers and CMS's users can modify output URLs using `permalink` property in Front Matter section. This propery allows to rename a page's URL in different locales. For example, add localized permalink to `index.html`:
+By default, the output file name is not changed when page is generated. Programmers and CMS users can modify output URLs using `permalink` property in Front Matter section. This propery allows you to rename a page's URL in different locales. For example, add a localized permalink to `index.html`:
 ```
 ...
 permalink_localized:
@@ -117,17 +116,17 @@ permalink_localized:
 ...
 ```
 
-Missing english permalink translation will use `/index.html` filename, and russian version will be available at `/ru/home.html`.
+Because the `en` permalink is missing, it will generate the `en` translation using the file name and will be `/index.html`. The russian version will be available at `/ru/home.html`.
 
 ## References to a page
-To create a hyper link to another page `permalink` filter is created. The syntax for it is:
+To create a url for another page, the `permalink` liquid filter is used. The syntax for it is:
 ```
 {{ <page|path> | permalink[: locale:<locale>] }}
 ```
 Where:
-* `page`: Liquid's object: represents a current rendering page.
-* `path`: file's path, e.g. `/dir/file-name` for `/dir/file-name.html`
-* `locale: <locale-value>`: a locale value/variable, to get a link to a particular translation. If locale is skipped then current locale is used.
+* `page`: Liquid's object: represents the current rendering page.
+* `path`: A file's path, e.g. `/dir/file-name` for `/dir/file-name.html`
+* `locale: <locale-value>`: a locale value/variable, to get a link to a particular translation. If locale is skipped then the current locale is used.
 
 
 There is additional syntax for Model-based pages:
@@ -137,8 +136,7 @@ There is additional syntax for Model-based pages:
 which is descrabed in the section below. 
 
 ## References to a page's translations
-
-As it was said before to obtain a localized URL there is a simple synatax:
+As metioned before, to obtain a localized URL to the current page, there is a simple synatax:
 ```
 {{ page | permalink: locale: <language> }}
 ```
@@ -160,14 +158,14 @@ The code above returns:
 > * EN
 > * RU
 
-To handle current language there is `site.active_lang` variable. Liquid `if` tag allows highlighing current page's language.
+To handle current language there is `site.active_lang` variable. The liquid `if` tag allows highlighing current page's language.
 
 The entire example of a language drop-down is shown below:
 
 ```
 <select id="language" onchange="location = this.options[this.selectedIndex].value;">
   {% for lang in site.languages %}
-    <option {% if lang == site.active_lang %} selected="true" {% endif%} value="{{ page | url: lang }}">
+    <option {% if lang == site.active_lang %} selected="true" {% endif%} value="{{ page | permalink: locale: lang }}">
       {{ lang | upcase }}
     </option>
   {% endfor %}
@@ -176,7 +174,7 @@ The entire example of a language drop-down is shown below:
 
 ## Editable Regions
 
-The plugins allow to define a region which is editable via CMS. 
+The plugins allow you to define a region which is editable via CMS. 
 Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced to from the item's data). Regions are unique for their hosting page and each language. 
 
 A liquid tag `region` requires one constant parameter which defines region's name. Add the next rows to `index.html`:
