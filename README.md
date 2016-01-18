@@ -244,6 +244,44 @@ Add a liquid `include` tag into `index.html`:
 ```
 As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region` tag, and then via the included `reg_sample.html` file.
 
+## Custom templates and Widgets
+Custom templates allow to render a custom data structure as a region content. However, CMS has only HTML editor as a defaut duilt-in editor. To extend CMS's UI and allow editing region's items based on a custom template the files `_widgets/show.html` and `_widgets/edit.html` are needed. Those files are loaded when preview and edit screens are opened in the CMS's region editor.
+
+The limitations for those files are:
+* Files must have a valid HAML content. In case plain text is used it's important to avoid any indentation
+* AngularJS bindins must be used to show/update PED content. There are `ped` and `content` variable in Angular's scope. `ped` variable allows to define any additional attribute for a PED object. `content` variable is set to PED's object `content` attribute.
+* Files should define `ng-template`s which `id` is `template_name.show` or `template_name.edit`.
+
+As an example, the following content can be used:
+> _widgets/show.html
+
+```
+%script(id="text.show" type="text/ng-template")
+  %p.ped-list_item_text
+    {{ ped.content }}
+<script id="text1.show" type="text/ng-template">
+<p class="ped-list_item_text">
+{{ ped.content }}
+</p>
+</script>
+%script(id="color_text.show" type="text/ng-template")
+  %p.ped-list_item_text(ng-style="{color: ped.color}")
+    {{ ped.text }}
+```
+
+> _widgets/edit.html
+
+```
+%script(id="text.edit" type="text/ng-template")
+  %textarea(ng-model="ped.content")
+%script(id="color_text.edit" type="text/ng-template")
+  %div(ng-init="colors=['red', 'blue', 'green']")
+    color 
+    %select(ng-options="color for color in colors track by color" ng-model="ped.color")
+    text 
+    %input(ng-model="ped.text")
+```
+
 ## Data references
 The plugins add the ability to reference any Jekyll model data. To activate it:
 * store data objects in a folder or file named as a plural noun, e.g. `_data/_models/groups/*.json` (where each file will be a JSON hash defining a single object) or `_data/_models/groups.json` (which is an array of JSON hash objects).
