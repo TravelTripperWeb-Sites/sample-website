@@ -8,7 +8,7 @@ A TravelTripper CMS website can be developed locally using a number of plugins. 
 
 ## Starting local development
 
-To develop a CMS website the following is needed: 
+To develop a CMS website the following is needed:
 
 * Ruby and Gem
 * Bundler: `gem install bundler`
@@ -44,7 +44,7 @@ Index page content
 
 Run `jekyll serve` in the root of your project to view the result in your browser at http://localhost:4000.
 
-This project supports many CMS extentions but doesn't use them yet.  
+This project supports many CMS extentions but doesn't use them yet.
 
 ## i18n
 To localize a website, additional configuration is needed. Create `/_config.yml` file as following:
@@ -53,14 +53,14 @@ default_lang: 'en'
 languages: ['en', 'ru']
 ```
 
-This will copy pages for each non-default locale from the generated website to a locale sub-folder. A default language copy is stored 
-under the project root. So, after this update, we will see `/index.html` and `/ru/index.html` pages. However their 
+This will copy pages for each non-default locale from the generated website to a locale sub-folder. A default language copy is stored
+under the project root. So, after this update, we will see `/index.html` and `/ru/index.html` pages. However their
 content will be the same.
 
 ## Translation tags
 To add localized content (e.g. labels, captions, etc), translation keys and files should be used.
 
-Create a `/_locales` folder and `/_locales/<language>.yml` files in [i18n format](http://guides.rubyonrails.org/i18n.html). 
+Create a `/_locales` folder and `/_locales/<language>.yml` files in [i18n format](http://guides.rubyonrails.org/i18n.html).
 In dynamic pages (which contain [Front Matter](http://jekyllrb.com/docs/frontmatter/)), the liquid tag `t` can be used.
 
 For example, create `/_locales/en.yml` file:
@@ -68,7 +68,7 @@ For example, create `/_locales/en.yml` file:
 en:
   hello: 'EN hello label'
 ```
-**A YAML locale file must be created for every specified language in /_config.yml, and at least one translation is needed in each file**. 
+**A YAML locale file must be created for every specified language in /_config.yml, and at least one translation is needed in each file**.
 Additional translation keys can be skipped, and in that case a warning message is shown: `translation missing: <locale>.<key>` as a result of `t` tag rendering.
 
 Update `index.html` using `translate` tag:
@@ -107,12 +107,12 @@ For example: `page.title` is used in the `default.html` layout file. It can be l
 ```
 The reference to title's value will use current language, so EN and RU pages will have translated titles accordingly.
 
-## Permalinks 
+## Permalinks
 By default, the output file name is not changed when page is generated. Programmers and CMS users can modify output URLs using `permalink` property in Front Matter section. This propery allows you to rename a page's URL in different locales. For example, add a localized permalink to `index.html`:
 ```
 ...
 permalink_localized:
-  ru: home
+  ru: home.html
 ...
 ```
 
@@ -133,7 +133,7 @@ There is additional syntax for Model-based pages:
 ```
 {{ <model-file-name> | permalink: model-dir:<model-directory-name>[, locale:<locale>] }}
 ```
-which is descrabed in the section below. 
+which is descrabed in the section below.
 
 ## References to a page's translations
 As metioned before, to obtain a localized URL to the current page, there is a simple synatax:
@@ -174,8 +174,8 @@ The entire example of a language drop-down is shown below:
 
 ## Editable Regions
 
-The plugins allow you to define a region which is editable via CMS. 
-Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced by the item's data). Regions are unique within each page/locale combination. 
+The plugins allow you to define a region which is editable via CMS.
+Every region can contain different region items. Each item is loaded from a data file and rendered using a particular template (which is referenced by the item's data). Regions are unique within each page/locale combination.
 
 The liquid tag `region` requires one constant parameter which defines region's name. Add the following content to `index.html`:
 ```
@@ -233,12 +233,12 @@ Custom HTML template: <p>1st item</p>Custom HTML template: <p>2nd item</p>
 The variable `include.instance` is a reference to a region item object in the JSON, so any additional fields can be used both in the Region item and its template. The CMS allows users to edit HTML region items, and the ability to create editors for additional regtion item types will be added later.
 
 ### Includes and Editable Regions
-Regions can also be defined in include files, but the region data is still specific to the primary page being rendered. For example, create the include file `/_includes/reg_sample.html`. 
+Regions can also be defined in include files, but the region data is still specific to the primary page being rendered. For example, create the include file `/_includes/reg_sample.html`.
 ```
 Included region: {% region region1 %}
 ```
 
-Add a liquid `include` tag into `index.html`: 
+Add a liquid `include` tag into `index.html`:
 ```
 {% include reg_sample.html %}
 ```
@@ -276,9 +276,9 @@ As an example, the following content can be used:
   %textarea(ng-model="ped.content")
 %script(id="color_text.edit" type="text/ng-template")
   %div(ng-init="colors=['red', 'blue', 'green']")
-    color 
+    color
     %select(ng-options="color for color in colors track by color" ng-model="ped.color")
-    text 
+    text
     %input(ng-model="ped.text")
 ```
 
@@ -290,14 +290,14 @@ The plugins add the ability to reference any Jekyll model data. To activate it:
 
 **Only simple plural forms ending with 's' are supported by current version. For example, men/man_id reference will not be resolved.**
 
-When using this structure, an objects reference will be autoloaded for page generation, so the following syntax can be used in a liquid tag in a page template: `book.group.name`. 
+When using this structure, an objects reference will be autoloaded for page generation, so the following syntax can be used in a liquid tag in a page template: `book.group.name`.
 
 The following example demonstrate this feature using single and multiple files to store data.
 
 Create `/_data/_models/authors.json` to store an array of Authors:
 
 ```
-[    
+[
     {
         "id": 1,
         "name": "Jack London"
@@ -306,7 +306,7 @@ Create `/_data/_models/authors.json` to store an array of Authors:
 ```
 
 Create `/_data/_models/groups` folder to store Groups as separate files:
-> /_data/_models/groups/group1.json
+> /_data/_models/groups/1.json
 
 ```
 {
@@ -315,7 +315,7 @@ Create `/_data/_models/groups` folder to store Groups as separate files:
 }
 ```
 
-> /_data/_models/groups/group2.json
+> /_data/_models/groups/2.json
 
 ```
 {
@@ -326,7 +326,7 @@ Create `/_data/_models/groups` folder to store Groups as separate files:
 
 Create `/_data/_models/books` folder to store Books objects as separate files. Each Book will refer to an Author and Group:
 
-> /_data/_models/books/book1.json
+> /_data/_models/books/1.json
 
 ```
 {
@@ -337,7 +337,7 @@ Create `/_data/_models/books` folder to store Books objects as separate files. E
 }
 ```
 
-> _data/_models/books/book2.json
+> _data/_models/books/2.json
 
 ```
 {
@@ -347,15 +347,15 @@ Create `/_data/_models/books` folder to store Books objects as separate files. E
   "description": "2nd description",
 }
 ```
-When rendered, every Book object has `author` and `group` properties, e.g. `{{ site.data.models.books['book1'].author.name }}`
-and `{{ site.data.models.books['book1'].group.name }}`. The next topic explains how to iterate over that data to render it.
+When rendered, every Book object has `author` and `group` properties, e.g. `{{ site.data._models.books[1].author.name }}`
+and `{{ site.data._models.books[1].group.name }}`. The next topic explains how to iterate over that data to render it.
 
 ## Data iteration
 This section explains the standard Liquid approach to iterating over data arrays or hashes.
 
 Liquid support  `for` cycle:
 ```
-{% for my_obj in site.data.models.<data-object> %}
+{% for my_obj in site.data._models.<data-object> %}
   {{ my_obj.<property-name> }}
 {% endfor %}
 ```
@@ -363,18 +363,18 @@ where "data-object" is a directory or file name (including the path but excludin
 
 To iterate over Books in the previous example the following code can be used:
 ```
-  {% for book in site.data.models.books %}
-    Book "{{book[1].title}}" is stored in {{ book[0] }}.json file<br>
+  {% for book in site.data._models.books %}
+    Book "{{book.title}}"<br>
   {% endfor %}
 ```
 It returns:
 
-> Book "1st book" is stored in book1.json file
-> Book "2nd book" is stored in book2.json file
+> Book "1st book"
+> Book "2nd book"
 
 To iterate over Authors array:
 ```
-  {% for author in site.data.models.authors %}
+  {% for author in site.data._models.authors %}
     {{author.name}}'s id = {{author.id}}<br>
   {% endfor %}
 ```
@@ -414,7 +414,7 @@ page_gen:
 The output site includes dynamic pages, e.g. `/book/book1.html`
 > #### Group: Group 2
 
-> *1st book* by **Jack London**. 
+> *1st book* by **Jack London**.
 
 > 1st description
 
