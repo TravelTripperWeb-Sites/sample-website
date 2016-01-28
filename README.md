@@ -245,14 +245,14 @@ Add a liquid `include` tag into `index.html`:
 As a result - the same `region1` block will be rendered twice on the page: firstly by the direct `region` tag, and then via the included `reg_sample.html` file.
 
 ## Custom templates and Widgets
-Custom templates allow to render a custom data structure as a region content. However, CMS has only HTML editor as a defaut duilt-in editor. To extend CMS's UI and allow editing region's items based on a custom template the files `_widgets/show.html` and `_widgets/edit.html` are needed. Those files are loaded when preview and edit screens are opened in the CMS's region editor.
+Custom templates allow rendering a custom data structure as region content. The CMS only has an HTML editor as a defaut built-in editor. To extend the CMS UI and allow editing region items based on a custom template, the files `_widgets/show.html` and `_widgets/edit.html` are needed. Those files are loaded when preview and edit screens are opened in the CMS's region editor.
 
 The limitations for those files are:
-* Files must have a valid HAML content. In case plain text is used it's important to avoid any indentation
-* AngularJS bindins must be used to show/update PED content. There are `ped` and `content` variable in Angular's scope. `ped` variable allows to define any additional attribute for a PED object. `content` variable is set to PED's object `content` attribute.
-* Files should define `ng-template`s which `id` is `template_name.show` or `template_name.edit`.
+* Files must have valid HAML content. In case plain text is used, it's important to avoid any indentation
+* AngularJS bindings must be used to show and update PED content. There are `ped` and `content` variables in Angular's scope. The `ped` variable allows you to define any additional attribute for a PED object. `content` variable is set to PED's object `content` attribute.
+* Files should define `ng-template`s with an `id` of `template_name.show` or `template_name.edit`.
 
-As an example, the following content can be used:
+As an example, the following can be used to define three types of widgets 'text' and 'text1' (which are identical), and 'color_text' which has the additional property 'color' and uses the property 'text' instead of 'content'.
 > _widgets/show.html
 
 ```
@@ -274,11 +274,14 @@ As an example, the following content can be used:
 ```
 %script(id="text.edit" type="text/ng-template")
   %textarea(ng-model="ped.content")
+<script id="text1.edit" type="text/ng-template">
+<textarea ng-model="ped.content"></textarea>
+</script>
 %script(id="color_text.edit" type="text/ng-template")
   %div(ng-init="colors=['red', 'blue', 'green']")
-    color
+    Select a color:
     %select(ng-options="color for color in colors track by color" ng-model="ped.color")
-    text
+    Text
     %input(ng-model="ped.text")
 ```
 
