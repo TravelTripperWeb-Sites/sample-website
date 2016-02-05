@@ -51,6 +51,7 @@ To localize a website, additional configuration is needed. Create `/_config.yml`
 ```
 default_lang: 'en'
 languages: ['en', 'ru']
+exclude: ['sitemap.json']
 ```
 
 This will copy pages for each non-default locale from the generated website to a locale sub-folder. A default language copy is stored
@@ -289,9 +290,7 @@ As an example, the following can be used to define three types of widgets 'text'
 The plugins add the ability to reference any Jekyll model data. To activate it:
 * store data objects in a folder or file named as a plural noun, e.g. `_data/_models/groups/*.json` (where each file will be a JSON hash defining a single object) or `_data/_models/groups.json` (which is an array of JSON hash objects).
 * add a numeric `id` field to a each object
-* add an association field to reference another object using a singular noun and `_id` postfix (e.g. a `book1.json` file might have a field `group_id` that references a particular group object)
-
-**Only simple plural forms ending with 's' are supported by current version. For example, men/man_id reference will not be resolved.**
+* add an association field to reference another object using a singular noun (e.g. a `book1.json` file might have a field `group` that references a particular group object)
 
 When using this structure, an objects reference will be autoloaded for page generation, so the following syntax can be used in a liquid tag in a page template: `book.group.name`.
 
@@ -333,8 +332,8 @@ Create `/_data/_models/books` folder to store Books objects as separate files. E
 
 ```
 {
-  "author_id": 1,
-  "group_id": 2,
+  "author": 1,
+  "group": 2,
   "title": "1st book",
   "description": "1st description"
 }
@@ -344,8 +343,8 @@ Create `/_data/_models/books` folder to store Books objects as separate files. E
 
 ```
 {
-  "author_id": 1,
-  "group_id": 1,
+  "author": 1,
+  "group": 1,
   "title": "2nd book",
   "description": "2nd description",
 }

@@ -1,6 +1,7 @@
 # Build settings
 default_lang: 'en'
 languages: ['en', 'ru']
+exclude: ['sitemap.json']
 page_gen:
   - data: 'events'
     template: 'event'

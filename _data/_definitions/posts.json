@@ -1,0 +1,4 @@
+{
+  "title": {},
+  "author": { "type": "model", "model_name": "authors", "display_field": "name"}
+}

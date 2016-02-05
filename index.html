@@ -13,7 +13,7 @@ label: Main Page
 <hr>
 
 <h1>Sample Posts:</h1>
-{% for post in site.data.posts %}
+{% for post in site.data._models.posts %}
   <h2>{{ post.title }}</h2>
   author: {{ post.author.name }}
 {% endfor %}
@@ -33,9 +33,9 @@ label: Main Page
 <hr>
 
 <h1>Sample Books:</h1>
-{% for book in site.data.books %}
-  <h2>{{ book[1].title }}</h2>
-  author: {{ book[1].writer.name }}
+{% for book in site.data._models.books %}
+  <h2>{{ book.title }}</h2>
+  author: {{ book.writer.name }}
 {% endfor %}
 
 
