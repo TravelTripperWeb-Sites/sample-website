@@ -1,4 +1,5 @@
 {
   "title": {},
-  "writer": { "type": "model", "model_name": "writers", "display_field": "name"}
+  "writer": { "type": "model", "model_name": "writers", "display_field": "name" },
+  "created_at": { "type": "date" }
 }

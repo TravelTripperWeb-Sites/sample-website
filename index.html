@@ -13,9 +13,10 @@ label: Main Page
 <hr>
 
 <h1>Sample Posts:</h1>
-{% for post in site.data._models.posts %}
+{% for post in site.data._models.posts | sort: 'created_at' %}
   <h2>{{ post.title }}</h2>
   author: {{ post.author.name }}
+  | created: {{ post.created_at | date_to_rfc822 }}
 {% endfor %}
 
 <a href='{{ '/events' | permalink_url }}'>Events test link</a>
@@ -33,9 +34,10 @@ label: Main Page
 <hr>
 
 <h1>Sample Books:</h1>
-{% for book in site.data._models.books %}
+{% for book in site.data._models.books | sort: "created_at" %}
   <h2>{{ book.title }}</h2>
   author: {{ book.writer.name }}
+  | created: {{ book.created_at | date_to_long_string }}
 {% endfor %}
 
 
