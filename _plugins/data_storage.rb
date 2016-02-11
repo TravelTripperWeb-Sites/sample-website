@@ -11,10 +11,11 @@ class Array
 end
 
 class DataStorage
-  attr_reader :collection
+  attr_reader :collection, :locale
 
-  def initialize(models, definitions)
+  def initialize(models, definitions, locale)
     @collection = {}
+    @locale = locale
 
     models_path = File.expand_path("../../_data/_models", __FILE__)
     (models || []).each do |model_name, model_data|

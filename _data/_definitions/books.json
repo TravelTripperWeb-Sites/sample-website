@@ -1,5 +1,5 @@
 {
-  "title": {},
+  "title": { "localizable": true },
   "writer": { "type": "model", "model_name": "writers", "display_field": "name" },
   "created_at": { "type": "date" }
 }

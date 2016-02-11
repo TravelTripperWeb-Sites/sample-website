@@ -10,7 +10,7 @@ module Jekyll
       @default_locale = @site.default_lang
 
       @content = translate_data(@content, @locale, @default_locale).tap do |content|
-        content['_models'] = DataStorage.new(convert_models(content['_models']), content['_definitions'] || {})
+        content['_models'] = DataStorage.new(convert_models(content['_models']), content['_definitions'] || {}, @locale)
       end
     end
 

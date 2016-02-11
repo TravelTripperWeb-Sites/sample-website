@@ -25,7 +25,7 @@ class DataObject
       super
     else
       name = name.to_s
-      if definitions.has_key?(name) && definitions[name].has_key?('type') && definitions[name]['type'] == 'model'
+      value = if definitions.has_key?(name) && definitions[name].has_key?('type') && definitions[name]['type'] == 'model'
         storage.send "find_#{definitions[name]['model_name']}_by_#{definitions[name]['foreign_key'] || 'id'}", data[name]
       elsif definitions.has_key?(name) && definitions[name].has_key?('type') && definitions[name]['type'] == 'date'
         Date.parse data[name]
@@ -34,6 +34,9 @@ class DataObject
       else
         data[name]
       end
+
+      definitions.has_key?(name) && definitions[name].has_key?('localizable') && definitions[name]['localizable'] ?
+        value[storage.locale] : value
     end
   end
 
