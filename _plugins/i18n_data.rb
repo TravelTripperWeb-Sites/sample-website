@@ -24,6 +24,8 @@ module Jekyll
               content << values[key.to_s].tap do |val|
                 raise "Data file #{key} has id property" if data_pages.include?(model) && !val['id'].nil?
                 val['id'] ||= key
+                val['__INSTANCE__'] = "#{key}.json"
+                val['__MODEL__'] = model
               end
             end
           end

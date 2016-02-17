@@ -19,17 +19,17 @@ label: Main Page
   | created: {{ post.created_at | date_to_rfc822 }}
 {% endfor %}
 
-<a href='{{ '/events' | permalink_url }}'>Events test link</a>
+<a href='{{ '/events' | permalink }}'>Events test link</a>
 <br>
-<a href='{{ '/test_i18n' | permalink_url }}'>i18n test link</a>
+<a href='{{ '/test_i18n' | permalink }}'>i18n test link</a>
 <br>
-<a href='{{ 'event1' | permalink_url: data_dir: 'events' }}'>test var</a>
+<a href='{{ 'event1' | permalink: data_dir: 'events' }}'>test var</a>
 <br>
-<a href='{{ '/events' | permalink_url: locale: 'ru' }}'>RU Events test link</a>
+<a href='{{ '/events' | permalink: locale: 'ru' }}'>RU Events test link</a>
 <br>
-<a href='{{ 'event1' | permalink_url: data_dir: 'events', locale: 'ru' }}'>test ru var</a>
+<a href='{{ 'event1' | permalink: data_dir: 'events', locale: 'ru' }}'>test ru var</a>
 <br>
-<a href='{{ page | permalink_url: locale: 'ru' }}'>RUSSIAN</a>
+<a href='{{ page | permalink: locale: 'ru' }}'>RUSSIAN</a>
 
 <hr>
 

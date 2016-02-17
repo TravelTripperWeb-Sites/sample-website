@@ -55,4 +55,5 @@ class DataObject
   def has_key?(property)
     data.has_key?(property)
   end
+
 end

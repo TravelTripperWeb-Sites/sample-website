@@ -1,7 +1,0 @@
----
-- id: 1
-  name_localized:
-    ru: 'rus name'
-    en: 'eng name'
-- id: 2
-  name: 'not localized name'
